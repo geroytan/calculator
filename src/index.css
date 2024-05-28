@@ -1,13 +1,3 @@
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #ffffff;
-  }
-  
   .calculator {
     width: 430px;
     height: 932px;
@@ -18,14 +8,14 @@ body {
   }
   
   .display {
-    height: 150px;
+    height: 200px;
     background-color: #000;
     color: #fff;
     font-size: 48px;
     text-align: right;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
