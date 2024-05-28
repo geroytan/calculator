@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Page, View, Block, Button } from "framework7-react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
@@ -13,6 +13,8 @@ function App() {
         setCalculated(false);
         return value;
       }
+      // Prevent multiple decimal points
+      if (value === "." && prevDisplay.includes(".")) return prevDisplay;
       return prevDisplay + value;
     });
   };
@@ -24,12 +26,19 @@ function App() {
 
   const calculate = () => {
     try {
+      // Prevent calculation if display ends with an operator
+      if (/[\/*\-+]$/.test(display)) {
+        setDisplay("Error");
+        setTimeout(clearDisplay, 2000);
+        return;
+      }
       const result = eval(display);
       setDisplay(result.toString());
       setCalculated(true);
     } catch (error) {
       setDisplay("Error");
       setCalculated(false);
+      setTimeout(clearDisplay, 2000);
     }
   };
 
@@ -59,6 +68,26 @@ function App() {
       return prevDisplay;
     });
   };
+
+  const handleKeyPress = (event) => {
+    const { key } = event;
+    if (!isNaN(key) || "+-*/.".includes(key)) {
+      appendToDisplay(key);
+    } else if (key === "Enter") {
+      calculate();
+    } else if (key === "Backspace") {
+      clearDisplay();
+    } else if (key === "%") {
+      calculatePercentage();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [display, calculated]);
 
   return (
     <Page>
