@@ -26,14 +26,27 @@ function App() {
 
   const calculate = () => {
     try {
+      let expression = display;
+      // Replace symbols with appropriate operators
+      expression = expression.replace(/÷/g, "/").replace(/×/g, "*");
+
       // Prevent calculation if display ends with an operator
-      if (/[\/*\-+]$/.test(display)) {
+      if (/[\/*\-+]$/.test(expression)) {
         setDisplay("Error");
         setTimeout(clearDisplay, 2000);
         return;
       }
-      const result = eval(display);
-      setDisplay(result.toString());
+      const result = eval(expression);
+
+      // Limit to 10 digits only if necessary
+      let formattedResult;
+      if (result.toString().length > 10) {
+        formattedResult = Number(result).toPrecision(10);
+      } else {
+        formattedResult = result.toString();
+      }
+
+      setDisplay(formattedResult);
       setCalculated(true);
     } catch (error) {
       setDisplay("Error");
@@ -104,8 +117,8 @@ function App() {
             <Button className="button2" onClick={calculatePercentage}>
               %
             </Button>
-            <Button className="button1" onClick={() => appendToDisplay("/")}>
-              /
+            <Button className="button1" onClick={() => appendToDisplay("÷")}>
+              ÷
             </Button>
             <Button className="button" onClick={() => appendToDisplay("7")}>
               7
@@ -116,8 +129,8 @@ function App() {
             <Button className="button" onClick={() => appendToDisplay("9")}>
               9
             </Button>
-            <Button className="button1" onClick={() => appendToDisplay("*")}>
-              *
+            <Button className="button1" onClick={() => appendToDisplay("×")}>
+              ×
             </Button>
             <Button className="button" onClick={() => appendToDisplay("4")}>
               4
