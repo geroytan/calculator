@@ -13,7 +13,6 @@ function App() {
         setCalculated(false);
         return value;
       }
-      // Prevent multiple decimal points
       if (value === "." && prevDisplay.includes(".")) return prevDisplay;
       return prevDisplay + value;
     });
@@ -27,10 +26,8 @@ function App() {
   const calculate = () => {
     try {
       let expression = display;
-      // Replace symbols with appropriate operators
       expression = expression.replace(/÷/g, "/").replace(/×/g, "*");
 
-      // Prevent calculation if display ends with an operator
       if (/[\/*\-+]$/.test(expression)) {
         setDisplay("Error");
         setTimeout(clearDisplay, 2000);
@@ -38,7 +35,6 @@ function App() {
       }
       const result = eval(expression);
 
-      // Limit to 10 digits only if necessary
       let formattedResult;
       if (result.toString().length > 10) {
         formattedResult = Number(result).toPrecision(10);
