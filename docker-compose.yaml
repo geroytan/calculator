@@ -14,7 +14,7 @@ services:
     depends_on:
       - nginx
     environment:
-      - NGROK_AUTHTOKEN=2i30WvBBn2Mp3Q0XPKISiu05bVb_74qkpRekaXy2nVwWFQ44P
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
       - NGROK_PORT=nginx:80
     ports:
       - "4040:4040"
