@@ -8,3 +8,13 @@ services:
     volumes:
       - ./html/build:/usr/share/nginx/html
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  ngrok:
+    image: wernight/ngrok
+    depends_on:
+      - nginx
+    environment:
+      - NGROK_AUTHTOKEN=2i30WvBBn2Mp3Q0XPKISiu05bVb_74qkpRekaXy2nVwWFQ44P
+      - NGROK_PORT=nginx:80
+    ports:
+      - "4040:4040"
